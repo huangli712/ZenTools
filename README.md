@@ -1,6 +1,6 @@
-# Zen
+# ZenTools
 
-Zen is a modern DFT + DMFT computation framework. This package is currently under developement. **IT DOESN'T WORK NOW!**
+ZenTools provides some auxliliary tools and apps for the Zen DFT + DMFT computation framework. This package is currently under developement. **IT DOESN'T WORK NOW!**
 
 ## Version
 
