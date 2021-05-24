@@ -1,10 +1,10 @@
 # ZenTools
 
-ZenTools provides some auxliliary tools and apps for the Zen DFT + DMFT computation framework. This package is currently under developement. **IT DOESN'T WORK NOW!**
+ZenTools provides some auxliliary tools for the Zen DFT + DMFT computation framework. This package is currently under developement. **IT DOESN'T WORK NOW!**
 
 ## Version
 
-v0.1.2-devel.210509
+v0.1.3-devel.210524
 
 ## License
 
