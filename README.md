@@ -1,10 +1,12 @@
 # ZenTools
 
-ZenTools provides some auxliliary tools for the Zen DFT + DMFT computation framework. This package is currently under developement. **IT DOESN'T WORK NOW!**
+ZenTools provides some auxliliary tools which are based on the ZenCore library. Actually, it is one of the core components of the Zen DFT + DMFT computation framework. It should be integrated with the Zen framework, working together with the other components.
+
+This package is currently under developement. **IT DOESN'T WORK NOW!**
 
 ## Version
 
-v0.1.3-devel.210524
+v0.9.1-devel.210622
 
 ## License
 
