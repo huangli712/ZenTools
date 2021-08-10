@@ -6,7 +6,7 @@ This package is currently under developement. **IT DOESN'T WORK NOW!**
 
 ## Version
 
-v0.9.1-devel.210622
+v0.9.2-devel.210810
 
 ## License
 
