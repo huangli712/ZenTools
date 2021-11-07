@@ -63,11 +63,12 @@ for p in eachindex(hamk)
 
         # Dump the band structures
         open("newtest.dat", "w") do fout
-        for b = 1:nband
-            for k = 1:nkpt
-                println(fout, xpath[k], " ", eigs[b,k])
+            for b = 1:nband
+                for k = 1:nkpt
+                    println(fout, xpath[k], " ", eigs[b,k])
+                end
+                println(fout)
             end
-            println(fout)
-        end
-    end
-end
+        end # END OF IOSTREAM
+    end # END OF S LOOP
+end # END OF P LOOP
