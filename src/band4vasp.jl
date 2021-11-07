@@ -51,18 +51,24 @@ _, _, nspin = size(D[:enk])
 
 for p in eachindex(hamk)
     for s = 1:nspin
+        println("Group: [$p] Spin [$s]")
+
         # Calculate H(𝑟)
+        println("  > Generate H(R)")
         HR = w90_make_hamr(D[:kmesh], rvec, hamk[p][:,:,:,s])
 
         # Build H(𝑘) along high-symmetry directions
+        println("  > Generate H(K)")
         HK = w90_make_hamk(kpath, rdeg, rvec, HR)
 
         # Calculate and output the band structures
+        println("  > Diagonalize H(K)")
         eigs, evec = w90_diag_hamk(HK)
         nband, nkpt = size(eigs)
 
         # Dump the band structures
-        open("newtest.dat", "w") do fout
+        println("  > Dump band structures into band.dat.h$p.s$s")
+        open("band.dat.h$p.s$s", "w") do fout
             for b = 1:nband
                 for k = 1:nkpt
                     println(fout, xpath[k], " ", eigs[b,k])
