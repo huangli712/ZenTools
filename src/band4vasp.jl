@@ -55,7 +55,7 @@ _, _, nspin = size(D[:enk])
 
 for p in eachindex(hamk)
     for s = 1:nspin
-        println("Group: [$p] Spin [$s]")
+        println("Group: [$p] Spin: [$s]")
 
         # Calculate H(𝑟)
         println("  > Generate H(R)")
