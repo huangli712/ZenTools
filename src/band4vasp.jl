@@ -53,6 +53,7 @@ hamk = calc_hamk(D[:PW], D[:Fchipsi], D[:enk])
 # Get nspin
 _, _, nspin = size(D[:enk])
 
+# Go through the groups and spins
 for p in eachindex(hamk)
     for s = 1:nspin
         println("Group: [$p] Spin: [$s]")
