@@ -30,9 +30,11 @@ for k in key_list
 end
 
 # Generate 𝑟-points in Wigner-Seitz cell
+println("Generate Wigner-Seitz cell")
 rdeg, rvec = w90_make_rcell(D[:latt])
 
 # Build high-symmetry 𝑘-path
+println("Generate high-symmetry 𝑘-path in the Brillouin zone")
 kstart = [0.0 0.0 0.0; # Γ
           0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
@@ -44,6 +46,7 @@ kend   = [0.5 0.0 0.0; # X
 kpath, xpath = w90_make_kpath(100, kstart, kend)
 
 # Build the hamiltonian in an uniform 𝑘-mesh
+println("Restore the Kohn-Sham Hamiltonian")
 hamk = calc_hamk(D[:PW], D[:Fchipsi], D[:enk])
 
 # Get nspin
