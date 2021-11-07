@@ -19,6 +19,7 @@ using Printf
 using ZenCore
 
 # Read the Kohn-Sham dataset
+println("Parse the Kohn-Sham dataset")
 D = ir_read("dft")
 
 # Check the validity of the `D` dict
