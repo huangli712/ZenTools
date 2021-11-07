@@ -6,7 +6,7 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/07
+# Last modified: 2021/11/08
 #
 
 # Update LOAD_PATH
@@ -31,11 +31,11 @@ for k in key_list
 end
 
 # Generate 𝑟-points in Wigner-Seitz cell
-println("Generate Wigner-Seitz cell")
+println("Generate the Wigner-Seitz cell")
 rdeg, rvec = w90_make_rcell(D[:latt])
 
 # Build high-symmetry 𝑘-path
-println("Generate high-symmetry 𝑘-path in the Brillouin zone")
+println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
 kstart = [0.0 0.0 0.0; # Γ
           0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
