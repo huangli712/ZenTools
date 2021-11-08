@@ -26,21 +26,38 @@ using Printf
 # Using the ZenCore library
 using ZenCore
 
-cfg = inp_toml("../SrVO3.toml", true)
+# Please setup what you want to do
+#
+# Total configuration file
+fcfg = "SrVO3.toml"
+#
+# File that contains original matrix functions
+fmat = "dmft1/dmft.delta"
+#
+# File that contains the diagonal elements
+fdia = fmat * ".diag"
+
+# Parse the configuration
+cfg = inp_toml(fcfg, true)
 rev_dict(cfg)
 ai = GetImpurity()
 
-fmesh, Delta = read_delta(ai, "dmft.green")
+# Read the matrix functions
+fmesh, Delta = read_delta(ai, fmat)
 _, qdim, nmesh, nspin, nsite = size(Delta)
 
-file = "dmft.green.diag"
-open(file, "w") do fout
-    for m = 1:nmesh
-        @printf(fout, "%6i%16.8f", m, fmesh[m])
-        for q = 1:qdim
-            z = Delta[q,q,m,1,1]
-            @printf(fout, "%16.8f%16.8f", real(z), imag(z))
-        end
-        println(fout)
-    end
-end
+# Write the diagonal elements
+for t = 1:nsite
+    for s = 1:nspin
+        open(fdia * ".$s.$t", "w") do fout
+            for m = 1:nmesh
+                @printf(fout, "%6i%16.8f", m, fmesh[m])
+                for q = 1:ai[t].nband
+                    z = Delta[q,q,m,s,t]
+                    @printf(fout, "%16.8f%16.8f", real(z), imag(z))
+                end # END OF Q LOOP
+                println(fout)
+            end # END OF M LOOP
+        end # END OF IOSTREAM
+    end # END OF S LOOP
+end # END OF T LOOP
