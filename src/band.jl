@@ -9,6 +9,12 @@
 # Last modified: 2021/11/08
 #
 
+#=
+*Remarks*:
+
+This script is used to generate the DFT band structures.  
+=#
+
 # Update LOAD_PATH
 push!(LOAD_PATH, ENV["ZEN_CORE"])
 
