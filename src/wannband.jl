@@ -26,6 +26,24 @@ using Printf
 # Using the ZenCore library
 using ZenCore
 
+"""
+Try to generate an uniform 𝑘-mesh via SpecialPointsCard. If you can not
+access regular 𝑘-mesh from the standout output of DFT engine, perhaps
+you can try this function.
+"""
+function build_uniform_kmesh(x::SpecialPointsCard)
+    nkpt = length(x.data)
+    kmesh = zeros(F64, nkpt, 3)
+    weight = zeros(F64, nkpt)
+    #
+    for k = 1:nkpt
+        kmesh[k,:] .= x.data[k].coord
+        weight[k] = x.data[k].weight
+    end
+    #
+    return kmesh, weight
+end
+
 # Build high-symmetry 𝑘-path
 println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
 #
@@ -46,7 +64,8 @@ kend   = [0.5 0.0 0.0; # X
 kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 
 # Get an uniform 𝑘-mesh
-kmesh, weight = qeio_kmesh("dft")
+#kmesh, weight = qeio_kmesh("dft")
+kmesh, weight = build_uniform_kmesh(SpecialPointsCard(12))
 
 # Determine the fermi level
 fermi = qeio_fermi("dft", false)
@@ -67,7 +86,7 @@ println("Generate H(𝑘) in an uniform 𝑘-mesh")
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
 # Perform 𝑘-summation to calculate band levels
-println("Try to evaluate the band levels")
+println("Compute the band levels")
 nwann, _, nkpt = size(hamk)
 level = zeros(C64, nwann)
 for k = 1:nkpt
@@ -75,8 +94,7 @@ for k = 1:nkpt
         level[b] = level[b] + hamk[b,b,k] * weight[k]
     end
 end
-@. level = level / nkpt
-@show level .- fermi
+level = level / sum(weight)
 
 # Dump the band structures
 println("Dump band structures into band.dat")
@@ -91,9 +109,18 @@ open("band.dat", "w") do fout
 end
 
 # Dump the 𝑘-list
+println("Dump 𝑘-path into kpath.dat")
 open("kpath.dat", "w") do fout
     nband, nkpt = size(eigs)
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
+    end
+end
+
+# Dump the band levels
+println("Dump band levels into level.dat")
+open("level.dat", "w") do fout
+    for i in eachindex(level)
+        @printf(fout, "%i4 %12.6f\n", i, real(level[i]))
     end
 end
