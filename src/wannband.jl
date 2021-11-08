@@ -14,6 +14,7 @@
 
 This script is used to generate the DFT band structures via the
 maximally localized wannier function scheme. Only for debug purpose.
+Perhaps this script is only suitable for qe + wannier90 mode
 =#
 
 # Update LOAD_PATH
@@ -25,18 +26,29 @@ using Printf
 # Using the ZenCore library
 using ZenCore
 
-function test_w90_band()
-    fermi = qeio_fermi("dft", false)
-    rdeg, rvec, hamr = w90_read_hamr("dft")
-    kstart = [0.0 0.0 0.0; # Γ
-              0.5 0.0 0.0; # X
-              0.5 0.5 0.0; # M
-              0.0 0.0 0.0] # Γ
-    kend   = [0.5 0.0 0.0; # X
-              0.5 0.5 0.0; # M
-              0.0 0.0 0.0; # Γ
-              0.5 0.5 0.5] # R
-    kpath, xpath = w90_make_kpath(100, kstart, kend)
+# Build high-symmetry 𝑘-path
+println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
+#
+# Number of 𝑘-points per direction
+ndiv = 100
+#
+# Please modify the following 𝑘-points to define high-symmetry 𝑘-paths
+kstart = [0.0 0.0 0.0; # Γ
+          0.5 0.0 0.0; # X
+          0.5 0.5 0.0; # M
+          0.0 0.0 0.0] # Γ
+kend   = [0.5 0.0 0.0; # X
+          0.5 0.5 0.0; # M
+          0.0 0.0 0.0; # Γ
+          0.5 0.5 0.5] # R
+#
+# Generate 𝑘-list
+kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
+
+fermi = qeio_fermi("dft", false)
+rdeg, rvec, hamr = w90_read_hamr("dft")
+sorry()
+
     hamk = w90_make_hamk(kpath, rdeg, rvec, hamr)
 
     eigs, evec = w90_diag_hamk(hamk)
@@ -80,5 +92,3 @@ function test_w90_band()
         end
     end
 =#
-
-end
