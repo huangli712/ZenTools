@@ -28,7 +28,7 @@ using ZenCore
 
 """
 Try to generate an uniform 𝑘-mesh via SpecialPointsCard. If you can not
-access regular 𝑘-mesh from the standout output of DFT engine, perhaps
+access regular 𝑘-mesh from the standout output of the DFT engine, perhaps
 you can try this function.
 """
 function build_uniform_kmesh(x::SpecialPointsCard)
@@ -64,8 +64,11 @@ kend   = [0.5 0.0 0.0; # X
 kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 
 # Get an uniform 𝑘-mesh
-#kmesh, weight = qeio_kmesh("dft")
+println("Generate an uniform 𝑘-mesh")
 kmesh, weight = build_uniform_kmesh(SpecialPointsCard(12))
+#
+# Alternatively, you can use the qeio_kmesh() function.
+#kmesh, weight = qeio_kmesh("dft")
 
 # Determine the fermi level
 fermi = qeio_fermi("dft", false)
@@ -87,13 +90,15 @@ hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
 # Perform 𝑘-summation to calculate band levels
 println("Compute the band levels")
-nwann, _, nkpt = size(hamk)
-level = zeros(C64, nwann)
+nband, _, nkpt = size(hamk)
+level = zeros(C64, nband)
+#
 for k = 1:nkpt
-    for b = 1:nwann
+    for b = 1:nband
         level[b] = level[b] + hamk[b,b,k] * weight[k]
     end
 end
+#
 level = level / sum(weight)
 
 # Dump the band structures
