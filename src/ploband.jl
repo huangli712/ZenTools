@@ -2,7 +2,7 @@
 
 #
 # Project : Begonia
-# Source  : band.jl
+# Source  : ploband.jl
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
@@ -13,7 +13,7 @@
 *Remarks*:
 
 This script is used to generate the DFT band structures via the
-projected local orbitals scheme.
+projected local orbitals scheme. Only for debug purpose.
 =#
 
 # Update LOAD_PATH
