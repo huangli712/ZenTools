@@ -12,7 +12,8 @@
 #=
 *Remarks*:
 
-This script is used to generate the DFT band structures.  
+This script is used to generate the DFT band structures via the
+projected local orbitals scheme.
 =#
 
 # Update LOAD_PATH
