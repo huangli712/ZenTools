@@ -1,9 +1,30 @@
+#!/usr/bin/env julia
+
+#
+# Project : Begonia
+# Source  : onlydiag.jl
+# Author  : Li Huang (lihuang.dmft@gmail.com)
+# Status  : Testing
+#
+# Last modified: 2021/11/08
+#
+
+#=
+*Remarks*:
+
+This script is used to parse the matrix functions, which are essential
+output of the dmft engine (`Dyson`), and extract the diagonal elements
+only. Only for debug purpose.
+=#
+
 # Update LOAD_PATH
 push!(LOAD_PATH, ENV["ZEN_CORE"])
 
-# Use the ZEN Framework
-using ZenCore
+# Using standard library
 using Printf
+
+# Using the ZenCore library
+using ZenCore
 
 cfg = inp_toml("../SrVO3.toml", true)
 rev_dict(cfg)
