@@ -45,7 +45,7 @@ function build_uniform_kmesh(x::SpecialPointsCard)
 end
 
 # Build high-symmetry 𝑘-path
-println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
+println("Generate the high-symmetry 𝑘-path")
 #
 # Number of 𝑘-points per direction
 ndiv = 100
@@ -107,7 +107,7 @@ open("band.dat", "w") do fout
     nband, nkpt = size(eigs)
     for b = 1:nband
         for k = 1:nkpt
-            @printf(fout, "%12.6f %12.6f", xpath[k], eigs[b,k] - fermi)
+            @printf(fout, "%12.6f %12.6f\n", xpath[k], eigs[b,k] - fermi)
         end
         println(fout)
     end
