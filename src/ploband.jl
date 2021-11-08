@@ -80,7 +80,7 @@ for p in eachindex(hamk)
         println("  > Generate H(K)")
         HK = w90_make_hamk(kpath, rdeg, rvec, HR)
 
-        # Calculate and output the band structures
+        # Calculate the band structures
         println("  > Diagonalize H(K)")
         eigs, evec = w90_diag_hamk(HK)
         nband, nkpt = size(eigs)
@@ -97,3 +97,10 @@ for p in eachindex(hamk)
         end # END OF IOSTREAM
     end # END OF S LOOP
 end # END OF P LOOP
+
+# Dump the 𝑘-list
+open("kpath.dat", "w") do fout
+    for k = 1:nkpt
+        @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
+    end
+end
