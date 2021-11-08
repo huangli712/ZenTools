@@ -2,7 +2,7 @@
 
 #
 # Project : Begonia
-# Source  : band4vasp.jl
+# Source  : band.jl
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
