@@ -42,6 +42,11 @@ rdeg, rvec = w90_make_rcell(D[:latt])
 
 # Build high-symmetry 𝑘-path
 println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
+#
+# Number of 𝑘-points per direction
+ndiv = 100
+#
+# Please modify the following 𝑘-points to define high-symmetry 𝑘-paths
 kstart = [0.0 0.0 0.0; # Γ
           0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
@@ -50,7 +55,9 @@ kend   = [0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
           0.0 0.0 0.0; # Γ
           0.5 0.5 0.5] # R
-kpath, xpath = w90_make_kpath(100, kstart, kend)
+#
+# Generate 𝑘-list
+kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 
 # Build the hamiltonian in an uniform 𝑘-mesh
 println("Restore the Kohn-Sham Hamiltonian")
