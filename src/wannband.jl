@@ -88,7 +88,7 @@ eigs, evec = w90_diag_hamk(hamk)
 println("Generate H(𝑘) in an uniform 𝑘-mesh")
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
-# Perform 𝑘-summation to calculate band levels
+# Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian)
 println("Compute the band levels")
 nband, _, nkpt = size(hamk)
 level = zeros(C64, nband)
@@ -107,7 +107,7 @@ open("band.dat", "w") do fout
     nband, nkpt = size(eigs)
     for b = 1:nband
         for k = 1:nkpt
-            println(fout, xpath[k], " ", eigs[b,k] - fermi)
+            @printf(fout, "%12.6f %12.6f", xpath[k], eigs[b,k] - fermi)
         end
         println(fout)
     end
