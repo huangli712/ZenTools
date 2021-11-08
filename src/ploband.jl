@@ -99,6 +99,7 @@ for p in eachindex(hamk)
 end # END OF P LOOP
 
 # Dump the 𝑘-list
+nkpt, _ = size(kpath)
 open("kpath.dat", "w") do fout
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
