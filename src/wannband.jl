@@ -126,6 +126,6 @@ end
 println("Dump band levels into level.dat")
 open("level.dat", "w") do fout
     for i in eachindex(level)
-        @printf(fout, "%i4 %12.6f\n", i, real(level[i]))
+        @printf(fout, "%4i %12.6f\n", i, real(level[i]))
     end
 end
