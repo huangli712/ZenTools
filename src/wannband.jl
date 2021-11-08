@@ -52,13 +52,16 @@ fermi = qeio_fermi("dft", false)
 rdeg, rvec, hamr = w90_read_hamr("dft")
 
 # Build H(𝑘) along high-symmetry directions
+println("Generate H(K)")
 hamk = w90_make_hamk(kpath, rdeg, rvec, hamr)
 
 # Calculate the band structures
+println("Diagonalize H(K)")
 eigs, evec = w90_diag_hamk(hamk)
 nband, nkpt = size(eigs)
 
 # Dump the band structures
+println("Dump band structures into band.dat")
 open("band.dat", "w") do fout
     for b = 1:nband
         for k = 1:nkpt
