@@ -61,11 +61,11 @@ function build_uniform_kmesh(x::SpecialPointsCard)
 end
 
 """
-    calc_level(hamk::Array{C64,3}, weight::Array{F64,1})
+    calc_band_level(hamk::Array{C64,3}, weight::Array{F64,1})
 
 Try to calculate band levels via 𝑘-summation.
 """
-function calc_level(hamk::Array{C64,3}, weight::Array{F64,1})
+function calc_band_level(hamk::Array{C64,3}, weight::Array{F64,1})
     # Print the header
     println("Compute the band levels")
 
@@ -108,8 +108,9 @@ kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 # Get an uniform 𝑘-mesh
 kmesh, weight = build_uniform_kmesh(SpecialPointsCard(12))
 #
-# Alternatively, you can use the qeio_kmesh() function.
-#kmesh, weight = qeio_kmesh("dft")
+# Alternatively, you can use the irio_kmesh() function. But you have to
+# make sure the obtained 𝑘-mesh is uniform.
+#kmesh, weight = irio_kmesh("dft")
 
 # Determine the fermi level
 fermi = irio_fermi("dft")
@@ -126,7 +127,7 @@ eigs, evec = w90_diag_hamk(hamk)
 # Build H(𝑘) in an uniform 𝑘-mesh
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
-# Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian).
+# Perform 𝑘-summation to calculate band levels
 calc_level(hamk, weight)
 
 # Dump the band structures
