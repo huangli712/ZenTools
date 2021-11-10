@@ -33,7 +33,8 @@ using ZenCore
 """
 Try to generate an uniform 𝑘-mesh via SpecialPointsCard. If you can not
 access regular 𝑘-mesh from the standout output of the DFT engine, perhaps
-you can try this function.
+you can try this function. Note that the SpecialPointsCard struct has
+been announced at ZenCore/qe.jl.
 """
 function build_uniform_kmesh(x::SpecialPointsCard)
     nkpt = length(x.data)
@@ -51,10 +52,10 @@ end
 # Build high-symmetry 𝑘-path
 println("Generate the high-symmetry 𝑘-path")
 #
-# Number of 𝑘-points per direction
+# Number of 𝑘-points per direction. You can modify it.
 ndiv = 100
 #
-# Please modify the following 𝑘-points to define high-symmetry 𝑘-paths
+# Please modify the following 𝑘-points to define high-symmetry directions
 kstart = [0.0 0.0 0.0; # Γ
           0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
@@ -75,7 +76,8 @@ kmesh, weight = build_uniform_kmesh(SpecialPointsCard(12))
 #kmesh, weight = qeio_kmesh("dft")
 
 # Determine the fermi level
-fermi = qeio_fermi("dft", false)
+println("Get fermi level")
+fermi = irio_fermi("dft")
 
 # Get tight-binding hamiltonian H(𝑟)
 rdeg, rvec, hamr = w90_read_hamr("dft")
