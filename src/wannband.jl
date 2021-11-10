@@ -37,7 +37,9 @@ you can try this function. Note that the SpecialPointsCard struct has
 been announced at ZenCore/qe.jl.
 """
 function build_uniform_kmesh(x::SpecialPointsCard)
+    # Print the header
     println("Generate an uniform 𝑘-mesh")
+
     nkpt = length(x.data)
     kmesh = zeros(F64, nkpt, 3)
     weight = zeros(F64, nkpt)
@@ -46,7 +48,13 @@ function build_uniform_kmesh(x::SpecialPointsCard)
         kmesh[k,:] .= x.data[k].coord
         weight[k] = x.data[k].weight
     end
-    #
+
+    # Print some useful information
+    println("  > Number of 𝑘-points: ", nkpt)
+    println("  > Shape of Array kmesh: ", size(kmesh))
+    println("  > Shape of Array weight: ", size(weight))
+
+    # Return the desired arrays
     return kmesh, weight
 end
 
