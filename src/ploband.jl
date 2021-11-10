@@ -6,7 +6,7 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/08
+# Last modified: 2021/11/10
 #
 
 #=
@@ -26,7 +26,6 @@ using Printf
 using ZenCore
 
 # Read the Kohn-Sham dataset
-println("Parse the Kohn-Sham dataset")
 D = ir_read("dft")
 
 # Check the validity of the `D` dict
