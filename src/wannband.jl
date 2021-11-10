@@ -94,7 +94,7 @@ eigs, evec = w90_diag_hamk(hamk)
 println("Generate H(𝑘) in an uniform 𝑘-mesh")
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
-# Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian)
+# Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian).
 println("Compute the band levels")
 nband, _, nkpt = size(hamk)
 level = zeros(C64, nband)
@@ -132,6 +132,6 @@ end
 println("Dump band levels into level.dat")
 open("level.dat", "w") do fout
     for i in eachindex(level)
-        @printf(fout, "%4i %12.6f\n", i, real(level[i]))
+        @printf(fout, "%4i %12.6f %12.6f\n", i, real(level[i]), real(level[i]) - fermi)
     end
 end
