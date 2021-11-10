@@ -128,7 +128,7 @@ eigs, evec = w90_diag_hamk(hamk)
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
 # Perform 𝑘-summation to calculate band levels
-calc_level(hamk, weight)
+calc_band_level(hamk, weight)
 
 # Dump the band structures
 println("Dump band structures into band.dat")
