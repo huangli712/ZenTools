@@ -31,6 +31,8 @@ using Printf
 using ZenCore
 
 """
+    build_uniform_kmesh(x::SpecialPointsCard)
+
 Try to generate an uniform 𝑘-mesh via SpecialPointsCard. If you can not
 access regular 𝑘-mesh from the standout output of the DFT engine, perhaps
 you can try this function. Note that the SpecialPointsCard struct has
@@ -56,6 +58,34 @@ function build_uniform_kmesh(x::SpecialPointsCard)
 
     # Return the desired arrays
     return kmesh, weight
+end
+
+"""
+    calc_level(hamk::Array{C64,3}, weight::Array{F64,1})
+
+Try to calculate band levels via 𝑘-summation.
+"""
+function calc_level(hamk::Array{C64,3}, weight::Array{F64,1})
+    # Print the header
+    println("Compute the band levels")
+
+    nband, _, nkpt = size(hamk)
+    level = zeros(C64, nband)
+    #
+    for k = 1:nkpt
+        for b = 1:nband
+            level[b] = level[b] + hamk[b,b,k] * weight[k]
+        end
+    end
+    #
+    level = level / sum(weight)
+
+    # Print some useful information
+    println("  > Number of 𝑘-points: ", nkpt)
+    println("  > Number of wannier bands: ", nband)
+
+    # Return the desired array
+    return level
 end
 
 # Build high-symmetry 𝑘-path
@@ -97,17 +127,7 @@ eigs, evec = w90_diag_hamk(hamk)
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
 # Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian).
-println("Compute the band levels")
-nband, _, nkpt = size(hamk)
-level = zeros(C64, nband)
-#
-for k = 1:nkpt
-    for b = 1:nband
-        level[b] = level[b] + hamk[b,b,k] * weight[k]
-    end
-end
-#
-level = level / sum(weight)
+calc_level(hamk, weight)
 
 # Dump the band structures
 println("Dump band structures into band.dat")
