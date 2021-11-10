@@ -37,6 +37,7 @@ you can try this function. Note that the SpecialPointsCard struct has
 been announced at ZenCore/qe.jl.
 """
 function build_uniform_kmesh(x::SpecialPointsCard)
+    println("Generate an uniform 𝑘-mesh")
     nkpt = length(x.data)
     kmesh = zeros(F64, nkpt, 3)
     weight = zeros(F64, nkpt)
@@ -50,8 +51,6 @@ function build_uniform_kmesh(x::SpecialPointsCard)
 end
 
 # Build high-symmetry 𝑘-path
-println("Generate the high-symmetry 𝑘-path")
-#
 # Number of 𝑘-points per direction. You can modify it.
 ndiv = 100
 #
@@ -69,29 +68,24 @@ kend   = [0.5 0.0 0.0; # X
 kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 
 # Get an uniform 𝑘-mesh
-println("Generate an uniform 𝑘-mesh")
 kmesh, weight = build_uniform_kmesh(SpecialPointsCard(12))
 #
 # Alternatively, you can use the qeio_kmesh() function.
 #kmesh, weight = qeio_kmesh("dft")
 
 # Determine the fermi level
-println("Get fermi level")
 fermi = irio_fermi("dft")
 
 # Get tight-binding hamiltonian H(𝑟)
 rdeg, rvec, hamr = w90_read_hamr("dft")
 
 # Build H(𝑘) along high-symmetry directions
-println("Generate H(𝑘) where 𝑘 along high-symmetry directions")
 hamk = w90_make_hamk(kpath, rdeg, rvec, hamr)
 
 # Calculate the band structures
-println("Diagonalize H(𝑘) where 𝑘 along high-symmetry directions")
 eigs, evec = w90_diag_hamk(hamk)
 
 # Build H(𝑘) in an uniform 𝑘-mesh
-println("Generate H(𝑘) in an uniform 𝑘-mesh")
 hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 
 # Perform 𝑘-summation to calculate band levels (i.e, local hamiltonian).
