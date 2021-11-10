@@ -53,8 +53,6 @@ function build_uniform_kmesh(x::SpecialPointsCard)
 
     # Print some useful information
     println("  > Number of 𝑘-points: ", nkpt)
-    println("  > Shape of Array kmesh: ", size(kmesh))
-    println("  > Shape of Array weight: ", size(weight))
 
     # Return the desired arrays
     return kmesh, weight
