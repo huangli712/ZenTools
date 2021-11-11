@@ -12,6 +12,14 @@
     isfile(query_case()*".test") &&
     plo_monitor(D)
 
+    # Are the projectors correct?
+    #
+    # We will try to calculate some physical quantitites, which
+    # will be written to external files or terminal for reference.
+    isinteractive() &&
+    isfile(query_case()*".test") &&
+    wannier_monitor(D)
+
 
 """
     plo_monitor(D::Dict{Symbol,Any})
