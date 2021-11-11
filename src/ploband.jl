@@ -6,7 +6,7 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/10
+# Last modified: 2021/11/11
 #
 
 #=
@@ -37,12 +37,9 @@ for k in key_list
 end
 
 # Generate 𝑟-points in Wigner-Seitz cell
-println("Generate the Wigner-Seitz cell")
 rdeg, rvec = w90_make_rcell(D[:latt])
 
 # Build high-symmetry 𝑘-path
-println("Generate the high-symmetry 𝑘-path in the Brillouin zone")
-#
 # Number of 𝑘-points per direction
 ndiv = 100
 #
@@ -60,7 +57,6 @@ kend   = [0.5 0.0 0.0; # X
 kpath, xpath = w90_make_kpath(ndiv, kstart, kend)
 
 # Build the hamiltonian in an uniform 𝑘-mesh
-println("Restore the Kohn-Sham Hamiltonian")
 hamk = calc_hamk(D[:PW], D[:Fchipsi], D[:enk])
 
 # Get nspin
@@ -69,18 +65,17 @@ _, _, nspin = size(D[:enk])
 # Go through the groups and spins
 for p in eachindex(hamk)
     for s = 1:nspin
+        println(repeat("=", 20))
         println("Group: [$p] Spin: [$s]")
+        println(repeat("=", 20))
 
         # Calculate H(𝑟)
-        println("  > Generate H(R)")
         HR = w90_make_hamr(D[:kmesh], rvec, hamk[p][:,:,:,s])
 
         # Build H(𝑘) along high-symmetry directions
-        println("  > Generate H(K)")
         HK = w90_make_hamk(kpath, rdeg, rvec, HR)
 
         # Calculate the band structures
-        println("  > Diagonalize H(K)")
         eigs, evec = w90_diag_hamk(HK)
         nband, nkpt = size(eigs)
 
