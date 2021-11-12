@@ -6,14 +6,11 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/11
+# Last modified: 2021/11/12
 #
 
 #=
 *Remarks*:
-
-This script is used to generate the DFT band structures via the
-projected local orbitals scheme. Only for debug purpose.
 =#
 
 # Update LOAD_PATH
@@ -31,7 +28,7 @@ D = ir_read("dft")
 # Check the validity of the `D` dict
 key_list = [:MAP, :PG, :PW,
             :latt, :kmesh, :weight,
-            :enk, :occupy, :Fchipsi, :fermi]
+            :enk, :occupy, :Fchipsi, :fermi, :chipsi]
 for k in key_list
     @assert haskey(D, k)
 end
@@ -40,10 +37,10 @@ end
 rdeg, rvec = w90_make_rcell(D[:latt])
 
 # Build high-symmetry 𝑘-path
-# Number of 𝑘-points per direction
+# Number of 𝑘-points per direction. You can modify it.
 ndiv = 100
 #
-# Please modify the following 𝑘-points to define high-symmetry 𝑘-paths
+# Please modify the following 𝑘-points to define high-symmetry directions
 kstart = [0.0 0.0 0.0; # Γ
           0.5 0.0 0.0; # X
           0.5 0.5 0.0; # M
