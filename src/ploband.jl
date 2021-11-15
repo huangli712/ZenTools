@@ -22,6 +22,34 @@ using Printf
 # Using the ZenCore library
 using ZenCore
 
+"""
+    calc_band_level(hamk::Array{C64,3}, weight::Array{F64,1})
+
+Try to calculate band levels via 𝑘-summation.
+"""
+function calc_band_level(hamk::Array{C64,3}, weight::Array{F64,1})
+    # Print the header
+    println("Compute the band levels")
+
+    nband, _, nkpt = size(hamk)
+    level = zeros(C64, nband)
+    #
+    for k = 1:nkpt
+        for b = 1:nband
+            level[b] = level[b] + hamk[b,b,k] * weight[k]
+        end
+    end
+    #
+    level = level / sum(weight)
+
+    # Print some useful information
+    println("  > Number of 𝑘-points: ", nkpt)
+    println("  > Number of wannier bands: ", nband)
+
+    # Return the desired array
+    return level
+end
+
 # Read the Kohn-Sham dataset
 D = ir_read("dft")
 

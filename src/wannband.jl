@@ -153,6 +153,6 @@ end
 println("Dump band levels into level.wann")
 open("level.wann", "w") do fout
     for i in eachindex(level)
-        @printf(fout, "%4i %12.6f %12.6f\n", i, real(level[i]), real(level[i]) - fermi)
+        @printf(fout, "%4i %12.6f\n", i, real(level[i]) - fermi)
     end
 end
