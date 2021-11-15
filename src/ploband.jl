@@ -94,6 +94,9 @@ for p in eachindex(hamk)
         println("Group: [$p] Spin: [$s]")
         println(repeat("=", 20))
 
+        # Perform 𝑘-summation to calculate band levels
+        level = calc_band_level(hamk[p][:,:,:,s], D[:weight])
+
         # Calculate H(𝑟)
         HR = w90_make_hamr(D[:kmesh], rvec, hamk[p][:,:,:,s])
 
@@ -113,6 +116,14 @@ for p in eachindex(hamk)
                 end # END OF K LOOP
                 println(fout)
             end # END OF B LOOP
+        end # END OF IOSTREAM
+
+        # Dump the band levels
+        println("Dump band levels into level.plo.p$p.s$s")
+        open("level.plo.p$p.s$s", "w") do fout
+            for i in eachindex(level)
+                @printf(fout, "%4i %12.6f\n", i, real(level[i]))
+            end # END OF I LOOP
         end # END OF IOSTREAM
     end # END OF S LOOP
 end # END OF P LOOP
