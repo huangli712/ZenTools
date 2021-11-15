@@ -1,24 +1,27 @@
-    # Are the projectors correct?
-    #
-    # We will try to calculate some physical quantitites, which
-    # will be written to external files or terminal for reference.
-    #
-    # These physical quantities include density matrix, overlap
-    # matrix, local hamiltonian, full hamiltonian, and partial
-    # density of states. Of course, it is time-comsuming to do
-    # these things. So it is a good idea to turn off this feature
-    # if everything is on the way.
-    isinteractive() &&
-    isfile(query_case()*".test") &&
-    plo_monitor(D)
+#!/usr/bin/env julia
 
-    # Are the projectors correct?
-    #
-    # We will try to calculate some physical quantitites, which
-    # will be written to external files or terminal for reference.
-    isinteractive() &&
-    isfile(query_case()*".test") &&
-    wannier_monitor(D)
+#
+# Project : Begonia
+# Source  : ircheck.jl
+# Author  : Li Huang (lihuang.dmft@gmail.com)
+# Status  : Testing
+#
+# Last modified: 2021/11/15
+#
+
+#=
+*Remarks*:
+
+Are the projectors correct? It is an important question. Here we will
+try to calculate some physical quantitites, which will be written to
+external files or terminal for reference.
+
+These physical quantities include density matrix, overlap matrix, local
+hamiltonian, full hamiltonian, and partial density of states. Of course,
+it is time-comsuming to do these things.
+
+This script is only for debug purpose.
+=#
 
 
 """
