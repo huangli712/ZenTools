@@ -121,8 +121,9 @@ for s = 1:nspin
 end # END OF S LOOP
 
 # Dump the 𝑘-list
-nkpt, _ = size(kpath)
-open("kpath.dat", "w") do fout
+println("Dump 𝑘-path into kpath.plo")
+open("kpath.plo", "w") do fout
+    nkpt, _ = size(kpath)
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
     end
