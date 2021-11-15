@@ -6,7 +6,7 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/12
+# Last modified: 2021/11/15
 #
 
 #=
@@ -77,8 +77,8 @@ for p in eachindex(hamk)
         nband, nkpt = size(eigs)
 
         # Dump the band structures
-        println("  > Dump band structures into band.dat.h$p.s$s")
-        open("band.dat.h$p.s$s", "w") do fout
+        println("  > Dump band structures into band.plo.p$p.s$s")
+        open("band.plo.p$p.s$s", "w") do fout
             for b = 1:nband
                 for k = 1:nkpt
                     println(fout, xpath[k], " ", eigs[b,k])
@@ -88,6 +88,37 @@ for p in eachindex(hamk)
         end # END OF IOSTREAM
     end # END OF S LOOP
 end # END OF P LOOP
+
+# Build the hamiltonian in an uniform 𝑘-mesh
+hamk = calc_hamk(D[:chipsi], D[:enk])
+
+# Go through the spins
+for s = 1:nspin
+    println(repeat("=", 20))
+    println("Spin: [$s]")
+    println(repeat("=", 20))
+
+    # Calculate H(𝑟)
+    HR = w90_make_hamr(D[:kmesh], rvec, hamk[:,:,:,s])
+
+    # Build H(𝑘) along high-symmetry directions
+    HK = w90_make_hamk(kpath, rdeg, rvec, HR)
+
+    # Calculate the band structures
+    eigs, evec = w90_diag_hamk(HK)
+    nband, nkpt = size(eigs)
+
+    # Dump the band structures
+    println("  > Dump band structures into band.plo.s$s")
+    open("band.plo.s$s", "w") do fout
+        for b = 1:nband
+            for k = 1:nkpt
+                println(fout, xpath[k], " ", eigs[b,k])
+            end
+            println(fout)
+        end
+    end # END OF IOSTREAM
+end # END OF S LOOP
 
 # Dump the 𝑘-list
 nkpt, _ = size(kpath)

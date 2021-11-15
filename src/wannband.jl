@@ -6,7 +6,7 @@
 # Author  : Li Huang (lihuang.dmft@gmail.com)
 # Status  : Testing
 #
-# Last modified: 2021/11/10
+# Last modified: 2021/11/15
 #
 
 #=
@@ -129,8 +129,8 @@ hamk = w90_make_hamk(kmesh, rdeg, rvec, hamr)
 level = calc_band_level(hamk, weight)
 
 # Dump the band structures
-println("Dump band structures into band.dat")
-open("band.dat", "w") do fout
+println("Dump band structures into band.wann")
+open("band.wann", "w") do fout
     nband, nkpt = size(eigs)
     for b = 1:nband
         for k = 1:nkpt
@@ -141,8 +141,8 @@ open("band.dat", "w") do fout
 end
 
 # Dump the 𝑘-list
-println("Dump 𝑘-path into kpath.dat")
-open("kpath.dat", "w") do fout
+println("Dump 𝑘-path into kpath.wann")
+open("kpath.wann", "w") do fout
     nband, nkpt = size(eigs)
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
@@ -150,8 +150,8 @@ open("kpath.dat", "w") do fout
 end
 
 # Dump the band levels
-println("Dump band levels into level.dat")
-open("level.dat", "w") do fout
+println("Dump band levels into level.wann")
+open("level.wann", "w") do fout
     for i in eachindex(level)
         @printf(fout, "%4i %12.6f %12.6f\n", i, real(level[i]), real(level[i]) - fermi)
     end
