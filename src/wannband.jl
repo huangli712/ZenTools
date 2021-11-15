@@ -135,9 +135,9 @@ open("band.wann", "w") do fout
     for b = 1:nband
         for k = 1:nkpt
             @printf(fout, "%12.6f %12.6f\n", xpath[k], eigs[b,k] - fermi)
-        end
+        end # END OF K LOOP
         println(fout)
-    end
+    end # END OF B LOOP
 end # END OF IOSTREAM
 
 # Dump the band levels
@@ -145,7 +145,7 @@ println("Dump band levels into level.wann")
 open("level.wann", "w") do fout
     for i in eachindex(level)
         @printf(fout, "%4i %12.6f\n", i, real(level[i]) - fermi)
-    end
+    end # END OF I LOOP
 end # END OF IOSTREAM
 
 # Dump the 𝑘-list
@@ -154,5 +154,5 @@ open("kpath.wann", "w") do fout
     nband, nkpt = size(eigs)
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
-    end
+    end # END OF K LOOP
 end # END OF IOSTREAM

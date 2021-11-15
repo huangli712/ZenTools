@@ -110,9 +110,9 @@ for p in eachindex(hamk)
             for b = 1:nband
                 for k = 1:nkpt
                     println(fout, xpath[k], " ", eigs[b,k])
-                end
+                end # END OF K LOOP
                 println(fout)
-            end
+            end # END OF B LOOP
         end # END OF IOSTREAM
     end # END OF S LOOP
 end # END OF P LOOP
@@ -145,9 +145,9 @@ for s = 1:nspin
         for b = 1:nband
             for k = 1:nkpt
                 println(fout, xpath[k], " ", eigs[b,k])
-            end
+            end # END OF K LOOP
             println(fout)
-        end
+        end # END OF B LOOP
     end # END OF IOSTREAM
 
     # Dump the band levels
@@ -155,7 +155,7 @@ for s = 1:nspin
     open("level.plo.s$s", "w") do fout
         for i in eachindex(level)
             @printf(fout, "%4i %12.6f\n", i, real(level[i]))
-        end
+        end # END OF I LOOP
     end # END OF IOSTREAM
 end # END OF S LOOP
 
@@ -165,5 +165,5 @@ open("kpath.plo", "w") do fout
     nkpt, _ = size(kpath)
     for k = 1:nkpt
         @printf(fout, "%12.6f %8.6f %8.6f %6.4f\n", kpath[k,:]..., 1.00)
-    end
+    end # END OF K LOOP
 end # END OF IOSTREAM
