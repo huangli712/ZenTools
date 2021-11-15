@@ -31,3 +31,14 @@ using Printf
 
 # Using the ZenCore library
 using ZenCore
+
+# Read the Kohn-Sham dataset
+D = ir_read("dft")
+
+# Check the validity of the `D` dict
+key_list = [:MAP, :PG, :PW,
+            :latt, :kmesh, :weight,
+            :enk, :occupy, :Fchipsi, :fermi, :chipsi]
+for k in key_list
+    @assert haskey(D, k)
+end
