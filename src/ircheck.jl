@@ -42,3 +42,6 @@ key_list = [:MAP, :PG, :PW,
 for k in key_list
     @assert haskey(D, k)
 end
+
+# Check the projectors
+plo_check(D)
