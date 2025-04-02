@@ -1,12 +1,12 @@
 #!/usr/bin/env julia
 
 #
-# Project : Daisy
+# Project : Begonia
 # Source  : dft_dmft.jl
 # Author  : Li Huang (huangli@caep.cn)
 # Status  : Testing
 #
-# Last modified: 2025/03/27
+# Last modified: 2025/04/02
 #
 
 #=
